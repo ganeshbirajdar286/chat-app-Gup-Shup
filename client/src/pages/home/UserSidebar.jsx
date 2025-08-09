@@ -16,7 +16,6 @@ const UserSidebar = () => {
   const handleLogout = async () => {
     await dispatch(logoutUserThunk());
   };
-  console.log(userProfile?.avatar)
 
   useEffect(() => {
     if (!searchValue) {

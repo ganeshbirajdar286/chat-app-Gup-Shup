@@ -24,7 +24,7 @@ const User = ({ userDetails }) => {
       <div className={`avatar `}>
         <div className="w-12 rounded-full">
           <img
-                src={`${import.meta.env.VITE_DB_ORIGIN}${useDispatch?.avatar}`}
+                src={`${import.meta.env.VITE_DB_ORIGIN}${userDetails?.avatar}`}
                 alt="user avatar"
               />
         </div>
