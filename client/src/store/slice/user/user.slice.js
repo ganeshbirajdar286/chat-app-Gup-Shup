@@ -31,7 +31,7 @@ export const userSlice = createSlice({
       state.buttonLoading = true;
     });
     builder.addCase(loginUserThunk.fulfilled, (state, action) => {
-      state.userProfile = action.payload?.responseData?.user;
+      state.userProfile = action.payload?.responseData?.newUser;
       state.isAuthenticated = true;
       state.buttonLoading = false;
     });
@@ -75,6 +75,7 @@ export const userSlice = createSlice({
     builder.addCase(getUserProfileThunk.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.screenLoading = false;
+      console.log(action.payload?.responseData)
       state.userProfile = action.payload?.responseData;
     });
     builder.addCase(getUserProfileThunk.rejected, (state, action) => {

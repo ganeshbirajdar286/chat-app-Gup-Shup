@@ -21,9 +21,9 @@ const User = ({ userDetails }) => {
         userDetails?._id === selectedUser?._id && "bg-gray-700"
       }`}
     >
-      <div className={`avatar ${isUserOnline && 'online'}`}>
+      <div className={`avatar `}>
         <div className="w-12 rounded-full">
-          <img src={userDetails?.avatar} />
+          <img src={`http://localhost:3000${userDetails?.avatar}`} />
         </div>
       </div>
       <div>

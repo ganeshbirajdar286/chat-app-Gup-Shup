@@ -7,6 +7,7 @@ import {
   setOnlineUsers,
 } from "../../store/slice/socket/socket.slice";
 import { setNewMessage } from "../../store/slice/message/message.slice";
+import { getUserProfileThunk } from "../../store/slice/user/user.thunk";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Home = () => {
   useEffect(() => {
     if (!isAuthenticated) return;
     dispatch(initializeSocket(userProfile?._id));
+    dispatch(getUserProfileThunk())
   }, [isAuthenticated]);
 
   useEffect(() => {

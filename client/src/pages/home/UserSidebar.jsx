@@ -16,6 +16,7 @@ const UserSidebar = () => {
   const handleLogout = async () => {
     await dispatch(logoutUserThunk());
   };
+  console.log(userProfile?.avatar)
 
   useEffect(() => {
     if (!searchValue) {
@@ -68,7 +69,7 @@ const UserSidebar = () => {
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-              <img src={userProfile?.avatar} />
+              <img src={`http://localhost:3000${userProfile?.avatar}`} alt="user avatar"/>
             </div>
           </div>
           <h2>{userProfile?.username}</h2>

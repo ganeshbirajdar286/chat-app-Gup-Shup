@@ -3,9 +3,16 @@ import express from "express";
 import { connectDB } from "./db/connection1.db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path"
+import { fileURLToPath } from "url";
+
+// Recreate __filename and __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 connectDB();
 
+// app use is exported from socket 
 app.use(
   cors({
     origin: [process.env.CLIENT_URL],
@@ -13,9 +20,13 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname,"public"))) ;
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'upload')));
 
-const PORT = process.env.PORT || 5000;
+
+const PORT = process.env.PORT ;
 
 // routes
 import userRoute from "./routes/user.route.js";

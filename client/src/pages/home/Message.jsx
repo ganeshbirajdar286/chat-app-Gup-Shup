@@ -29,8 +29,8 @@ const Message = ({ messageDetails }) => {
               alt="Tailwind CSS chat bubble component"
               src={
                 userProfile?._id === messageDetails?.senderId
-                  ? userProfile?.avatar
-                  : selectedUser?.avatar
+                  ? `http://localhost:3000${userProfile?.avatar}`
+                  : `http://localhost:3000${selectedUser?.avatar}`
               }
             />
           </div>

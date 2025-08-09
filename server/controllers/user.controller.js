@@ -6,7 +6,8 @@ import jwt from "jsonwebtoken";
 
 export const register = asyncHandler(async (req, res, next) => {
   const { fullName, username, password, gender } = req.body;
-
+  
+ 
   if (!fullName || !username || !password || !gender) {
     return next(new errorHandler("All fields are required", 400));
   }
@@ -18,8 +19,10 @@ export const register = asyncHandler(async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const avatarType = gender === "male" ? "boy" : "girl";
-  const avatar = `https://avatar.iran.liara.run/public/${avatarType}?username=${username}`;
+   const avatar =  req.file ? `/uploads/${req.file.filename}` : null;
+if (!avatar) {
+  return next(new errorHandler("Avatar file is required", 400));
+}
 
   const newUser = await User.create({
     username,
@@ -29,20 +32,21 @@ export const register = asyncHandler(async (req, res, next) => {
     avatar,
   });
 
+  console.log(avatar);
   const tokenData = {
     _id: newUser?._id,
   };
 
   const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
+    expiresIn: process.env.JWT_EXPIRE,
   });
+
+  console.log(process.env.JWT_EXPIRE);
 
   res
     .status(200)
     .cookie("token", token, {
-      expires: new Date(
-        Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-      ),
+       maxAge:60*1000*60*24,
       httpOnly: true,
       secure: true,
       sameSite: "None",
@@ -84,19 +88,17 @@ export const login = asyncHandler(async (req, res, next) => {
   };
 
   const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
+    expiresIn: process.env.JWT_EXPIRE,
   });
 
   res
     .status(200)
-    .cookie("token", token, {
-      expires: new Date(
-        Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-    })
+    .cookie("token",token,{
+    maxAge:60*1000*60*24,
+      httpOnly:true,
+      secure:true,
+      sameSite:"None",
+  })
     .json({
       success: true,
       responseData: {
@@ -109,8 +111,7 @@ export const login = asyncHandler(async (req, res, next) => {
 export const getProfile = asyncHandler(async (req, res, next) => {
   const userId = req.user._id;
 
-  const profile = await User.findById(userId);
-
+const profile = await User.findById(userId);
   res.status(200).json({
     success: true,
     responseData: profile,
