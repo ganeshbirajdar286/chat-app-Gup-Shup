@@ -29,8 +29,8 @@ const Message = ({ messageDetails }) => {
               alt="Tailwind CSS chat bubble component"
               src={
                 userProfile?._id === messageDetails?.senderId
-                  ? `http://localhost:3000${userProfile?.avatar}`
-                  : `http://localhost:3000${selectedUser?.avatar}`
+                  ? `${import.meta.env.VITE_DB_ORIGIN}${userProfile?.avatar}`
+                  : `${import.meta.env.VITE_DB_ORIGIN}${selectedUser?.avatar}`
               }
             />
           </div>

@@ -69,7 +69,10 @@ const UserSidebar = () => {
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-              <img src={`http://localhost:3000${userProfile?.avatar}`} alt="user avatar"/>
+              <img
+                src={`${import.meta.env.VITE_DB_ORIGIN}${userProfile?.avatar}`}
+                alt="user avatar"
+              />
             </div>
           </div>
           <h2>{userProfile?.username}</h2>
